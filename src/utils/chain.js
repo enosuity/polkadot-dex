@@ -141,7 +141,7 @@ export async function transferAsset(assetId, recipient, amount, defaultAccount) 
         console.log("\n🔹 Transferring Asset:");
         console.table({ "Asset ID": assetId, "Recipient": recipient, "Amount": amountBN.toString() });
 
-        const extrinsic = api.tx.liquidityPallet.transferTokens(assetId, recipient, amountBN);
+        const extrinsic = api.tx.liquidity.transferTokens(assetId, recipient, amountBN);
 
         return await signAndSendExtrinsic(extrinsic, defaultAccount, "Transfer Asset");
 
@@ -152,7 +152,7 @@ export async function transferAsset(assetId, recipient, amount, defaultAccount) 
 }
 
 /**
- * Mint assets using the `liquidityPallet`
+ * Mint assets using the `liquidity`
  */
 export async function mintAsset(assetId, beneficiary, amount, defaultAccount) {
     try {
@@ -167,7 +167,7 @@ export async function mintAsset(assetId, beneficiary, amount, defaultAccount) {
             return null;
         }
 
-        const extrinsic = api.tx.liquidityPallet.mintTokens(assetId, amountBN, beneficiary);
+        const extrinsic = api.tx.liquidity.mintTokens(assetId, amountBN, beneficiary);
 
         return await signAndSendExtrinsic(extrinsic, defaultAccount, "Mint Asset");
 
@@ -187,8 +187,9 @@ export async function createAsset(assetId, adminAddress, minBalance, defaultAcco
 
         console.log("\n🔹 Creating Asset:");
         console.table({ "Asset ID": assetId, "Admin Address": adminAddress, "Minimum Balance": minBalanceBN.toString() });
-
-        const extrinsic = api.tx.aassets.create(assetId, adminAddress, minBalanceBN);
+        debugger
+        console.log("api ====> ", api);
+        const extrinsic = api.tx.aAssets.create(assetId, adminAddress, minBalanceBN);
 
         return await signAndSendExtrinsic(extrinsic, defaultAccount, "Create Asset");
 
@@ -203,7 +204,7 @@ export async function createAsset(assetId, adminAddress, minBalance, defaultAcco
 
 
 /**
- * Deposit liquidity using `liquidityPallet`
+ * Deposit liquidity using `liquidity`
  */
 export async function depositLiquidity(asset1, asset2, amount1, amount2, defaultAccount) {
     try {
@@ -224,7 +225,7 @@ export async function depositLiquidity(asset1, asset2, amount1, amount2, default
             return null;
         }
 
-        const extrinsic = api.tx.liquidityPallet.depositLiquidity(asset1, asset2, amount1BN, amount2BN);
+        const extrinsic = api.tx.liquidity.depositLiquidity(asset1, asset2, amount1BN, amount2BN);
 
         return await signAndSendExtrinsic(extrinsic, defaultAccount, "Deposit Liquidity");
 
@@ -235,7 +236,7 @@ export async function depositLiquidity(asset1, asset2, amount1, amount2, default
 }
 
 /**
- * Withdraw liquidity using `liquidityPallet`
+ * Withdraw liquidity using `liquidity`
  */
 export async function withdrawLiquidity(asset1, asset2, withdrawAmount1, withdrawAmount2, defaultAccount) {
     try {
@@ -256,7 +257,7 @@ export async function withdrawLiquidity(asset1, asset2, withdrawAmount1, withdra
             return null;
         }
 
-        const extrinsic = api.tx.liquidityPallet.withdrawLiquidity(asset1, asset2, withdrawAmount1BN, withdrawAmount2BN);
+        const extrinsic = api.tx.liquidity.withdrawLiquidity(asset1, asset2, withdrawAmount1BN, withdrawAmount2BN);
 
         return await signAndSendExtrinsic(extrinsic, defaultAccount, "Withdraw Liquidity");
 
